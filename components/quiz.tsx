@@ -9,8 +9,8 @@ import {
 import { useState, useCallback } from "react";
 import { ArrowLeft, ArrowRight, RotateCcw, Home, ExternalLink, Image as ImageIcon } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 function ProgressBar({
   current,
@@ -94,7 +94,13 @@ function QuestionCard({
   );
 }
 
-function ResultCard({ creature }: { creature: Creature }) {
+function ResultCard({
+  creature,
+  onRestart,
+}: {
+  creature: Creature;
+  onRestart: () => void;
+}) {
   return (
     <div className="flex flex-col items-center gap-8 text-center">
       <div className="flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/5 px-4 py-1.5">
@@ -109,28 +115,19 @@ function ResultCard({ creature }: { creature: Creature }) {
       </h2>
 
       <div className="relative flex flex-col items-center gap-4">
-        <div className="relative h-64 w-64 overflow-hidden rounded-2xl border border-border/50 bg-muted/50 md:h-80 md:w-80">
-          <Image
-            src={creature.image || "/placeholder.svg"}
-            alt={creature.name}
-            fill
-            className="object-cover"
-          />
-        </div>
-        
         <a
           href={`https://www.google.com/search?q=${encodeURIComponent(creature.name)}&tbm=isch`}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "group inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-4 py-2",
-            "font-mono text-xs font-medium text-muted-foreground backdrop-blur-sm",
+            "group inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-6 py-3",
+            "font-mono text-sm font-medium text-muted-foreground backdrop-blur-sm",
             "transition-all duration-200 hover:border-foreground/30 hover:bg-accent hover:text-foreground"
           )}
         >
-          <ImageIcon className="h-3.5 w-3.5" />
-          {"Посмотреть другие фотографии"}
-          <ExternalLink className="h-3 w-3 opacity-50 group-hover:opacity-100" />
+          <ImageIcon className="h-4 w-4" />
+          {"Посмотреть фотографии в Google"}
+          <ExternalLink className="h-3.5 w-3.5 opacity-50 group-hover:opacity-100" />
         </a>
       </div>
 
@@ -159,8 +156,8 @@ function ResultCard({ creature }: { creature: Creature }) {
       </div>
 
       <div className="flex flex-col items-center gap-3 pt-2 sm:flex-row">
-        <Link
-          href="/quiz"
+        <button
+          onClick={onRestart}
           className={cn(
             "inline-flex items-center gap-2 rounded-lg px-6 py-3",
             "bg-foreground text-background",
@@ -171,7 +168,7 @@ function ResultCard({ creature }: { creature: Creature }) {
         >
           <RotateCcw className="h-4 w-4" />
           {"Пройти ещё раз"}
-        </Link>
+        </button>
         <Link
           href="/"
           className={cn(
