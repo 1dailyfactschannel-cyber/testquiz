@@ -10,7 +10,6 @@ import { useState, useCallback } from "react";
 import { ArrowLeft, ArrowRight, RotateCcw, Home, ExternalLink, Image as ImageIcon } from "lucide-react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import Link from "next/link";
-import Image from "next/image";
 
 function ProgressBar({
   current,
